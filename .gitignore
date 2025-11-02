@@ -1,0 +1,9 @@
+# Python cache files
+__pycache__/
+*.pyc
+
+# User-specific configuration
+config.ini
+
+# Temporary preview file
+/tmp/photoflow_preview.jpg

@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=PhotoFlow
+Comment=Ingest, organize, and tag photos for archiving and Obsidian.
+Exec=/usr/bin/python3 /home/crispi/apps/PhotoFlow/gui.py
+Icon=/home/crispi/apps/PhotoFlow/assets/photoflow.svg
+Terminal=false
+Type=Application
+Categories=Graphics;Photography;
+StartupNotify=true
