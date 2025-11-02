@@ -1,0 +1,31 @@
+<svg width="256" height="256" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Squircle Background -->
+  <path d="M 50,0 C 10,0 0,10 0,50 C 0,90 10,100 50,100 C 90,100 100,90 100,50 C 100,10 90,0 50,0 Z" fill="#2c2c3e" stroke="#1a1a26" stroke-width="1"/>
+  
+  <!-- Shutter Icon -->
+  <g transform="translate(25, 20) scale(0.4)">
+    <circle cx="50" cy="50" r="45" fill="none" stroke="#ffffff" stroke-width="6"/>
+    <path d="M 50 50 L 85 30 A 45 45 0 0 0 70 15 Z" fill="#ffffff"/>
+    <path d="M 50 50 L 70 85 A 45 45 0 0 0 85 70 Z" fill="#ffffff"/>
+    <path d="M 50 50 L 15 70 A 45 45 0 0 0 30 85 Z" fill="#ffffff"/>
+    <path d="M 50 50 L 30 15 A 45 45 0 0 0 15 30 Z" fill="#ffffff"/>
+    <circle cx="50" cy="50" r="12" fill="#2c2c3e" stroke="#ffffff" stroke-width="2"/>
+  </g>
+  
+  <!-- Gear Icon -->
+  <g transform="translate(42, 48) scale(0.15)">
+    <path d="M 50 10 A 10 10 0 0 0 40 18 L 40 10 L 60 10 L 60 18 A 10 10 0 0 0 50 10 Z M 18 40 A 10 10 0 0 0 10 50 A 10 10 0 0 0 18 60 L 10 60 L 10 40 Z M 82 40 L 90 40 L 90 60 L 82 60 A 10 10 0 0 0 90 50 A 10 10 0 0 0 82 40 Z M 50 90 A 10 10 0 0 0 60 82 L 60 90 L 40 90 L 40 82 A 10 10 0 0 0 50 90 Z M 25 25 A 10 10 0 0 0 16 34 L 10 28 L 28 10 L 34 16 A 10 10 0 0 0 25 25 Z M 75 25 A 10 10 0 0 0 66 34 L 72 40 L 90 22 L 84 16 A 10 10 0 0 0 75 25 Z M 25 75 A 10 10 0 0 0 34 66 L 28 60 L 10 78 L 16 84 A 10 10 0 0 0 25 75 Z M 75 75 A 10 10 0 0 0 66 84 L 72 90 L 90 72 L 84 66 A 10 10 0 0 0 75 75 Z" fill="#ffffff"/>
+    <circle cx="50" cy="50" r="15" fill="#ffffff"/>
+  </g>
+
+  <!-- Picture Icon -->
+  <g transform="translate(58, 22) scale(0.35)">
+    <rect x="5" y="15" width="90" height="70" rx="8" ry="8" fill="#ffffff" stroke="#2c2c3e" stroke-width="4"/>
+    <circle cx="30" cy="35" r="7" fill="#88b0c0"/>
+    <path d="M 20 75 L 45 50 L 65 70 L 80 55 L 95 75 Z" fill="#b0c0d0"/>
+  </g>
+  
+  <!-- Arrow -->
+  <path d="M 52 55 C 55 65, 65 75, 75 78 L 72 85 C 60 80, 50 70, 48 58 Z" fill="#E67E22"/>
+  <path d="M 73 73 L 82 77 L 78 86 Z" fill="#E67E22"/>
+</svg>
