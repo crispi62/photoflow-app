@@ -2,7 +2,7 @@
 Version=1.0
 Name=PhotoFlow
 Comment=Process and tag photos for archiving and Obsidian.
-Exec=/usr/bin/python3 /home/crispi/apps/PhotoFlow/gui.py
+Exec=/usr/bin/python3 /home/crispi/My_Linux_Apps/PhotoFlow/gui.py
 Icon=com.crispi.photoflow
 Terminal=false
 Type=Application
