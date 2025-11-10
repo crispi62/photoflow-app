@@ -1,114 +1,97 @@
-PhotoFlow
+# PhotoFlow v2.0.0
 
-"Because your photos weren't going to tag and rename themselves."
+A robust photo ingestion and processing utility for photographers using Linux.
 
-What Is This Thing?
+---
 
-PhotoFlow is a (surprisingly functional) GTK desktop application for Linux, born from a maddening series of bugs and a whole lot of exiftool. It's designed to be the first step in a serious photography workflow.
+## What is PhotoFlow?
 
-It ingests new photos (JPEGs and RAWs) from a source folder, lets you batch-rename and tag them, and then intelligently moves them to a final archive. As a bonus, it creates resized, auto-rotated, and tagged copies specifically for use in an Obsidian vault.
+PhotoFlow is a GTK4 desktop application designed to streamline the first, most tedious step of a photography workflow: getting photos off your camera card and into your archive.
 
-This application was forged in the fiery crucible of countless AttributeErrors, file corruptions, and one very stubborn PixbufLoader bug. It stands as a testament to the fact that if you debug something long enough, it might, eventually, work.
+It ingests new photos (JPEGs and RAWs), lets you rename and tag them, and then intelligently moves them to a final archive directory. As a bonus, it creates resized, auto-rotated, and tagged copies specifically for use in an [Obsidian](https://obsidian.md/) vault, perfect for daily journaling.
 
-Core Features
+This application was forged in the fiery crucible of countless bugs and a whole lot of `exiftool`. It stands as a testament to the fact that if you debug something long enough, it might, eventually, work.
 
-Smart Grouping: Automatically detects and groups RAW+JPG pairs, displaying them as a single item in the UI.
+## Core Features
 
-Thumbnail Previews: Generates correctly-oriented thumbnails for all images, including tricky smartphone DNGs.
+*   **Smart RAW+JPG Pairing**: Automatically detects and groups RAW and JPG files of the same photo, displaying them as a single item in the UI.
+*   **Dual Workflow System**:
+    *   **Batch Process**: Quickly rename, tag, and process a large selection of photos with common settings.
+    *   **Individual Review**: A powerful, step-by-step window for assigning unique filenames, tags, comments, and GPS data to each photo.
+*   **Obsidian Integration**: Creates date-based folders in your vault and copies a resized, auto-rotated, and fully tagged JPEG into them, ready to be linked in your notes.
+*   **Robust Metadata Engine**: Uses `exiftool` to reliably write metadata (Tags, Comments, GPS) to JPG and DNG files.
+*   **Persistent Tag History**: Remembers all your previously used tags and provides an auto-complete dropdown for faster, more consistent tagging.
+*   **Modern GTK4 Interface**: A clean, theme-aware interface that looks great in both light and dark modes.
+*   **Safe & Reliable File Handling**: Built with a robust processing pipeline that moves files to a temporary location first, ensuring no data is lost even if an error occurs.
 
-Dual Workflow:
+---
 
-Batch Process: Rename, tag, and process all selected photos in one go.
+## Installation
 
-Individual Review: A step-by-step review window for adding individual filenames, tags, and (eventually) comments.
+Tested on Pop!_OS 22.04 (Ubuntu-based).
 
-Persistent Tagging: Remembers all your tags and provides an auto-complete dropdown for faster, more consistent tagging.
+### 1. System Dependencies
 
-Metadata Engine: Uses exiftool to robustly write metadata (Tags, Comments) to JPG, DNG, and the resized JPG copies.
+First, install the core libraries and tools the application depends on.
 
-Obsidian Integration: Creates date-based folders in your vault and copies a resized, auto-rotated, and tagged JPEG into them, ready to be linked in your notes.
-
-Safe File Handling: Safely moves files across different hard drives (e.g., from an SSD to an external archive drive) without crashing.
-
-Installation (For the "Eventual User")
-
-This app was built on Pop!_OS (Ubuntu-based).
-
-1. Dependencies (The System Stuff)
-
-You need to install the core libraries this app depends on.
-
+```bash
 sudo apt update
 sudo apt install python3-gi python3-gi-cairo gir1.2-gtk-4.0
-sudo apt install libimage-exiftool-perl imagemagick libheif-dev
+sudo apt install libimage-exiftool-perl
 sudo apt install python3-pip
+```
 
+### 2. Python Libraries
 
-2. Python Libraries
+Next, install the required Python packages using `pip`. It's recommended to do this from the project directory.
 
-Next, install the required Python packages using pip.
-
-cd ~/apps/PhotoFlow
+```bash
+cd /path/to/PhotoFlow
 pip install -r requirements.txt
+```
 
+### 3. Configuration (`config.ini`)
 
-(This will install Pillow, rawpy, and pillow-heif.)
+PhotoFlow requires a `config.ini` file in the root of the project directory. This file is ignored by Git for your safety. You must create it yourself.
 
-3. Configuration (The config.ini)
-
-This app is useless without a config.ini file. This file is ignored by Git for your safety. You must create it yourself in the ~/apps/PhotoFlow directory.
-
-File: config.ini
-
+Here is a template:
+```ini
 [Paths]
-# The folder where your new photos are (e.g., /home/user/Downloads).
-SourceDirectory = /home/crispi/Downloads
-
 # Your main photo archive (e.g., an external drive).
-DestinationDirectory = /media/crispi/Seagate/Photo Archive
-
-# The target folder inside your Obsidian vault.
-ObsidianVaultPicturesDirectory = /home/crispi/Documents/Obsidian/Encyclopedia Crispianus/99_Attachments/Pictures/Daily
-
+DestinationDirectory = /media/user/PhotoArchive
+# The target folder inside your Obsidian vault for pictures.
+ObsidianVaultPicturesDirectory = /home/user/Documents/Obsidian/Vault/Attachments/Pictures
 [Settings]
 # The maximum width and height for the resized JPEGs for Obsidian.
 ResizeWidth = 1600
 ResizeHeight = 1600
+```
 
+### 4. Desktop Integration (Optional)
 
-4. Desktop Integration (The Icon)
+To make PhotoFlow appear as a native application in your desktop environment:
 
-To make it a "real" app:
-
-Copy the Icon:
-
-sudo cp ~/apps/PhotoFlow/assets/photoflow.svg /usr/share/icons/hicolor/scalable/apps/com.crispi.photoflow.svg
-
-
-Update the Cache:
-
+```bash
+# Copy the icon
+sudo cp /path/to/PhotoFlow/assets/photoflow.svg /usr/share/icons/hicolor/scalable/apps/com.crispi.photoflow.svg
+# Update the icon cache
 sudo gtk-update-icon-cache /usr/share/icons/hicolor/
+# Copy the launcher to your local applications folder
+cp /path/to/PhotoFlow/photoflow.desktop ~/.local/share/applications/
+```
 
+## How to Run
 
-Copy the Launcher:
+*   **From the App Menu**: After desktop integration, you can find "PhotoFlow" in your system's application launcher.
+*   **From the Terminal**: For development or debugging, run:
+    ```bash
+    cd /path/to/PhotoFlow
+    python3 gui.py
+    ```
 
-cp ~/apps/PhotoFlow/photoflow.desktop ~/.local/share/applications/
+## Credits
 
-
-How to Run
-
-After installing, you can find "PhotoFlow" in your "Show Applications" menu.
-
-To run it from the terminal for debugging:
-
-cd ~/apps/PhotoFlow
-python3 gui.py
-
-
-Credits
-
-Forged by: Crispi
-
-With the reluctant assistance of: a slightly cynical AI (Gemini)
-
-© 2025 Crispi
+*   **Forged by**: Crispi
+*   **With the reluctant assistance of**: a slightly cynical AI (Gemini)
+*   **License**: GPL-3.0
+*   **© 2025 Crispi**

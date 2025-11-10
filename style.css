@@ -1,0 +1,81 @@
+/*
+ * PhotoFlow Application Stylesheet
+ * This file provides subtle visual enhancements to the PhotoFlow UI.
+ * It uses GTK's theme-defined colors to adapt to both light and dark modes.
+ */
+
+/* --- General Styling --- */
+
+/* Add a slight rounding to frame borders */
+frame {
+    border-radius: 6px;
+    box-shadow: 0 1px 3px alpha(black, 0.1); /* Add a subtle shadow for depth */
+}
+
+/* --- Thumbnail View Styling --- */
+
+.thumbnail-widget {
+    background-color: transparent;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    padding: 4px;
+    transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+}
+
+/* Add a subtle hover effect to thumbnails for better feedback */
+.thumbnail-widget:hover {
+    /* Use the theme's foreground color with low opacity for a subtle hover effect */
+    /* Replace @theme_fg_color with an actual color value, e.g., #000 or rgb(0,0,0) */
+    background-color: rgba(0, 0, 0, 0.05); 
+}
+
+/* Style for selected thumbnails to make them more prominent */
+.flowboxchild:selected .thumbnail-widget {
+    background-color: #4a90e2;
+    border: 1px solid alpha(#2c5aa0, 0.7);
+}
+
+.flowboxchild:selected .thumbnail-widget > label {
+    color: white;
+}
+
+/* The badge for "RAW" or "RAW+JPG" on thumbnails */
+.thumbnail-badge {
+    background-color: alpha(#3d3d3d, 0.85);
+    color: white;
+    font-weight: bold;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.8em;
+}
+
+/* --- Review Window & Data Entry --- */
+
+/* Highlight for entry fields that are missing data (e.g., GPS in ReviewWindow) */
+.missing-data {
+    background-color: alpha(orange, 0.1);
+    border-color: alpha(orange, 0.5);
+}
+
+/* --- Button and Entry Styling --- */
+
+/* Style for primary action buttons */
+.suggested-action {
+    background-color: #4a90e2;
+    color: white;
+    font-weight: bold;
+}
+
+/* Add a smooth transition to all buttons on hover */
+button {
+    transition: background-color 0.2s ease-in-out;
+}
+
+/* Add a focus highlight to all text entry fields */
+entry {
+    transition: box-shadow 0.2s ease-in-out;
+}
+
+entry:focus {
+    box-shadow: 0 0 0 2px alpha(#4a90e2, 0.5);
+}

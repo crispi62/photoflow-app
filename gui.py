@@ -10,6 +10,7 @@ import io
 import subprocess
 import configparser
 import json
+import requests # Added for future geotagging
 
 # Import our backend engine
 import photoflow as core_engine
@@ -241,7 +242,7 @@ class PreferencesWindow(Gtk.Window):
         
         paths_frame = Gtk.Frame(label="Default Paths")
         paths_grid = Gtk.Grid(margin_start=12, margin_end=12, margin_top=6, margin_bottom=12,
-                              row_spacing=6, column_spacing=12)
+                                  row_spacing=6, column_spacing=12)
         paths_frame.set_child(paths_grid)
         
         self.dest_entry = Gtk.Entry()
@@ -257,7 +258,7 @@ class PreferencesWindow(Gtk.Window):
         
         settings_frame = Gtk.Frame(label="Resize Settings")
         settings_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=6,
-                               margin_start=12, margin_end=12, margin_top=6, margin_bottom=12)
+                                  margin_start=12, margin_end=12, margin_top=6, margin_bottom=12)
         settings_frame.set_child(settings_box)
         
         self.width_spinner = Gtk.SpinButton.new_with_range(100, 4000, 1)
@@ -435,7 +436,7 @@ class PhotoFlowWindow(Gtk.ApplicationWindow):
         thread.start()
         
     def processing_thread_worker_batch(self, selection_data, settings, new_tags):
-        core_engine.process_photos(selection_data, settings)
+        core_engine.process_batch(selection_data, settings)
         GLib.idle_add(self.on_processing_finished, new_tags)
 
     def start_individual_processing(self, review_data, all_specific_tags):
@@ -633,8 +634,6 @@ class PhotoFlowApp(Gtk.Application):
         win = self.get_active_window()
         dialog = Gtk.AboutDialog()
         dialog.set_program_name("PhotoFlow")
-        # You can create an icon named 'com.crispi.photoflow.svg' 
-        # and install it to /usr/share/icons/hicolor/scalable/apps/
         dialog.set_logo_icon_name("com.crispi.photoflow")
         dialog.set_comments("Forged by Crispi and a slightly cynical AI assistant (Gemini).\nIt stands as a testament to the fact that if you debug something long enough, it might, eventually, work.")
         dialog.set_copyright("© 2025 Crispi & Gemini")
@@ -648,6 +647,16 @@ class PhotoFlowApp(Gtk.Application):
         self.load_tag_completion()
         self.win = PhotoFlowWindow(application=app)
         self.win.present()
+
+    def load_css(self):
+        """Loads the application's CSS file for styling."""
+        provider = Gtk.CssProvider()
+        # Assuming you have a style.css file in the same directory
+        css_file = Path(__file__).parent / 'style.css'
+        if css_file.exists():
+            provider.load_from_path(str(css_file))
+            Gtk.StyleContext.add_provider_for_display(
+                Gdk.Display.get_default(), provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
         
     def load_tag_completion(self):
         TAG_CONFIG_DIR.mkdir(parents=True, exist_ok=True)
@@ -671,29 +680,10 @@ class PhotoFlowApp(Gtk.Application):
                     self.all_tags.add(t)
                     self.tag_model.append([t])
                     new_tags_found = True
-        
-        if new_tags_found:
-            sorted_tags = sorted(list(self.all_tags))
-            with open(TAG_FILE, 'w') as f:
-                for tag in sorted_tags:
-                    f.write(f"{tag}\n")
-            print("Tag list updated.")
-    
-    def load_css(self):
-        css_provider = Gtk.CssProvider()
-        css = """
-        headerbar label.title { font-size: 1.2em; font-weight: bold; }
-        .thumbnail-widget { border: 1px solid rgba(0, 0, 0, 0.4); border-radius: 4px; padding: 4px; background-color: rgba(0, 0, 0, 0.1); }
-        button { color: #E67E22; border: 1px solid rgba(0, 0, 0, 0.2); border-radius: 5px; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); background-image: none; }
-        button:hover { box-shadow: 0 0 1px rgba(0, 0, 0, 0.2); background-color: rgba(255, 255, 255, 0.05); }
-        scale trough { background-color: #E67E22; }
-        .thumbnail-badge { background-color: rgba(0, 0, 0, 0.7); color: white; font-size: 0.8em; font-weight: bold; padding: 1px 4px; border-radius: 3px; }
-        entry.missing-data { border: 1px solid rgba(220, 50, 50, 0.6); background-color: rgba(220, 50, 50, 0.05); }
-        """
-        css_provider.load_from_data(css.encode())
-        Gtk.StyleContext.add_provider_for_display(Gdk.Display.get_default(), css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
-    
-if __name__ == "__main__":
+
+if __name__ == '__main__':
+    # This is the entry point of the application
+    import sys
     app = PhotoFlowApp(application_id="com.crispi.photoflow")
-    app.run(None)
-    
+    exit_status = app.run(sys.argv)
+    sys.exit(exit_status)
